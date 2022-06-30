@@ -248,9 +248,7 @@ import { Blog } from '@leosvel/blog';
 const title = 'Blog';
 const description = 'My blog with articles about web development and programming in general.';
 
-const posts = Astro.fetchContent('../../blog-posts/*.md').sort(
-  (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-);
+const posts = await Astro.glob('../../blog-posts/*.md')
 ---
 
 <Layout {title} {description} socialImage="/assets/blog-leosvel.dev.png" socialImageAlt="Leosvel's blog social image">
@@ -258,7 +256,7 @@ const posts = Astro.fetchContent('../../blog-posts/*.md').sort(
 </Layout>
 ```
 
-Like the [landing page](#landing-page), it's very simple and it delegates the presentation concerns to the `Blog` component (located in the `blog` library) while providing a title and the list of posts. The interesting bit is the loading of the Markdown files with the blog posts. To do that, I used the [`Astro.fetchContent()` helper function](https://docs.astro.build/reference/api-reference/#astrofetchcontent) passing a glob to those files. This function returns an array of objects containing, among other things, the Frontmatter properties specified in the Markdown files. I used the `date` property to sort the posts by date in descending order.
+Like the [landing page](#landing-page), it's very simple and it delegates the presentation concerns to the `Blog` component (located in the `blog` library) while providing a title and the list of posts. The interesting bit is the loading of the Markdown files with the blog posts. To do that, I used the [`Astro.glob()` helper function](https://docs.astro.build/reference/api-reference/#astroglob) passing a glob to those files. This function returns an array of objects containing, among other things, the Frontmatter properties specified in the Markdown files. I used the `date` property to sort the posts by date in descending order.
 
 The following is the Frontmatter script section for this blog post Markdown file:
 
@@ -319,7 +317,7 @@ import Layout from '../../layouts/BlogPostLayout.astro';
 import { BlogPost } from '@leosvel/blog';
 
 export function getStaticPaths() {
-  const posts = Astro.fetchContent('../../blog-posts/*.md');
+  const posts = await Astro.glob('../../blog-posts/*.md');
 
   return posts.map((post) => ({
     params: { slug: post.file.pathname.split('/').pop().split('.').shift() },

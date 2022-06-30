@@ -2,59 +2,30 @@
 import Layout from '../../layouts/BlogPostLayout.astro';
 import { BlogPost } from '@leosvel/blog';
 
-export function getStaticPaths({ rss }) {
-  const posts = Astro.fetchContent('../../blog-posts/*.md')
-    .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
-    .map((post) => ({
-      ...post,
-      slug: post.file.pathname.split('/').pop().split('.').shift(),
-    }));
-
-  rss({
-    title: `Leosvel's blog`,
-    stylesheet: true,
-    description:
-      'My blog with articles about web development and programming in general.',
-    items: posts.map((post) => ({
-      title: post.title,
-      description: post.description,
-      link: `/blog/${post.slug}`,
-      pubDate: post.date,
-    })),
-  });
-
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+export async function getStaticPaths() {
+  const posts = await Astro.glob('../../blog-posts/*.md')
+  // return posts.map((post) => ({
+  //   params: { slug: post.frontmatter.slug },
+  //   props: { post: post.frontmatter },
+  // }));
+  return [ {params: { blog: "creating-my-personal-website-with-astro-tailwindcss-and-nx"}}]
 }
 
-const {
-  Content,
-  title,
-  description,
-  date,
-  heroImage,
-  heroImageAlt,
-  thumbnailImage,
-  thumbnailImageAlt,
-  canonicalUrl,
-} = Astro.props.post;
-
-const originalUrl = !canonicalUrl?.startsWith(Astro.site.href)
-  ? canonicalUrl
-  : undefined;
+// const {
+//   Content,
+//   title,
+//   description,
+//   date,
+//   heroImage,
+//   heroImageAlt,
+//   thumbnailImage,
+//   thumbnailImageAlt,
+//   canonicalUrl,
+// } = Astro.props.frontmatter;
+// console.error({canonicalUrl})
+// const originalUrl = !canonicalUrl?.startsWith(Astro.site.href)
+//   ? canonicalUrl
+//   : undefined;
 ---
 
-<Layout
-  {title}
-  {description}
-  socialImage={thumbnailImage}
-  socialImageAlt={thumbnailImageAlt}
-  {canonicalUrl}
-  {originalUrl}
->
-  <BlogPost {title} {date} {heroImage} {heroImageAlt} {originalUrl}>
-    <Content />
-  </BlogPost>
-</Layout>
+<>yolo</>

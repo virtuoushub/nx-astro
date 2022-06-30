@@ -14,7 +14,7 @@ const {
   socialImage,
   socialImageAlt,
 } = Astro.props;
-const { canonicalURL } = Astro.request;
+const { canonicalURL } = Astro;
 const siteName = canonicalURL.hostname;
 const title = `${pageTitle} | ${siteName}`;
 ---
@@ -34,7 +34,7 @@ const title = `${pageTitle} | ${siteName}`;
   <body
     class="min-h-screen w-screen bg-white flex flex-col font-mono text-white selection:bg-cyan-700 selection:text-white overflow-x-hidden"
   >
-    <Header currentPage={Astro.request.url.pathname} />
+    <Header currentPage={Astro.request.url} />
 
     <main class="flex flex-1">
       <slot />
