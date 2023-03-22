@@ -11,7 +11,7 @@
     "@astrojs/rss": "^0.2.0"
   },
   "devDependencies": {
-    "@builder.io/partytown": "0.6.2",
+    "@builder.io/partytown": "0.7.6",
     "@nrwl/cli": "14.3.6",
     "@nrwl/tao": "14.3.6",
     "@nrwl/workspace": "14.3.6",
